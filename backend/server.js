@@ -6,6 +6,7 @@ import {router} from './routes/product.route.js';
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 4500;
 
 app.use(express.json());
 app.use("/api/v1/products", router);
@@ -14,7 +15,7 @@ app.get('/', (req, res) => {
     res.send("API is running...");
 });
 
-app.listen(4500, () => {
+app.listen(PORT, () => {
     connectDB();
-    console.log('Server is listening on port 4500 http://localhost:4500');
+    console.log('Server is listening on port ' + PORT + ' http://localhost:' + PORT);
 });

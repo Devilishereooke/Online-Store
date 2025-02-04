@@ -27,6 +27,11 @@ export const createProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
     const productId = req.params.id;
+
+    if(!mongoose.Types.ObjectId.isValid(productId)) {
+        return res.status(400).send({messege : "Invalid Product Id"});
+    }
+
     try {
         const product = await Product.findByIdAndDelete(productId);
         if(!product) {
@@ -40,6 +45,11 @@ export const deleteProduct = async (req, res) => {
 
 export const updateProduct = async (req,res) => {
     const productId = req.params.id;
+
+    if(!mongoose.Types.ObjectId.isValid(productId)) {
+        return res.status(400).send({messege : "Invalid Product Id"});
+    }
+    
     const product = req.body;
     try {
         const updatedProduct = await Product.findByIdAndUpdate(productId, product, {new: true});
