@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Product from '../models/product.model.js';
 
 export const getProducts = async (req, res) => {
@@ -11,9 +12,10 @@ export const getProducts = async (req, res) => {
 
 export const createProduct = async (req, res) => {
     const product = req.body;
-
     if(!product.name || !product.price || !product.imageUrl) {
-        return res.status(400).send("Please provide all required fields");
+        console.log(product)
+        console.log(1);
+        return res.status(400).send({message: "Please provide all required fields"});
     }
     const newProduct = new Product(product);
     try {
@@ -37,8 +39,10 @@ export const deleteProduct = async (req, res) => {
         if(!product) {
             return res.status(404).send({messege : "Product not found"});
         }
-        res.status(200).send({messege : "Product deleted successfully"});
+        res.status(200).send({success : true, messege : "Product deleted successfully"});
     } catch (error) {
+        console.log(error);
+        
         return res.status(500).send({messege : error.messege});
     }
 }
